@@ -164,7 +164,9 @@ def depthFirstSearch(problem, recursive = True):
         stack.push(start)
         while not stack.isEmpty():
             vertex = stack.pop()
-            visited.append(vertex)
+            
+            
+            .append(vertex)
             if vertex == problem.goal:
                 break
             neighbours = problem.getSuccessors(vertex)
@@ -254,7 +256,39 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     showOfChecked(explored)
     return path
 
+def GreedySearch(problem, heuristic=nullHeuristic):
 
+
+    visited = []
+    action = []
+
+    start = problem.getStartState()
+    start_cost = heuristic(start, problem)
+
+    reachable = util.PriorityQueue()
+    reachable.push(start, start_cost)
+
+    while not reachable.isEmpty():
+        nodes = reachable.pop()
+
+        node = nodes[-1]
+        if problem.isGoalState(node[0][0]):
+            for path in nodes[1:]:
+                action.append(path[0][1])
+            return action
+
+        if node[0][0] not in visited:
+            visited.append(node[0][0])
+            successors = problem.getSuccessors(node[0][0])
+
+            for successor in successors:
+                if successor[0] not in visited:
+                    cost = node[1] + successor[2]
+                    start_cost = heuristic(successor[0], problem)
+                    currentpath = nodes[:]
+                    currentpath.append([successor, cost])
+                    reachable.push(currentpath, start_cost)
+    return []
 
 # Abbreviations
 bfs = breadthFirstSearch
