@@ -260,5 +260,5 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
-#greedy = GreedySearch
+greedy = GreedySearch
 ucs = uniformCostSearch
